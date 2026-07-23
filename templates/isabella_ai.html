@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isabella IA - Panel de Developers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0e27; color: #fff; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .header { background: linear-gradient(135deg, #ff6b6b, #ff5252); padding: 2rem; border-radius: 10px; margin-bottom: 2rem; color: #fff; }
+        .header h1 { margin-bottom: 0.5rem; }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid #333; padding-bottom: 1rem; }
+        .tab-btn { padding: 0.75rem 1.5rem; background: transparent; color: #aaa; border: none; cursor: pointer; font-size: 1rem; border-bottom: 2px solid transparent; transition: all 0.3s; }
+        .tab-btn.active { color: #ff6b6b; border-bottom-color: #ff6b6b; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .section { background: linear-gradient(135deg, #1a1f3a, #0f1420); padding: 2rem; border-radius: 10px; margin-bottom: 2rem; }
+        .section h2 { color: #ff6b6b; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #aaa; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; background: #0f1420; border: 1px solid #333; border-radius: 5px; color: #fff; font-family: monospace; }
+        .btn { padding: 0.75rem 2rem; background: #ff6b6b; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+        .btn:hover { background: #ff5252; }
+        .card { background: #0f1420; padding: 1.5rem; border-radius: 8px; border-left: 3px solid #ff6b6b; margin-bottom: 1rem; }
+        .card h3 { color: #ff6b6b; margin-bottom: 0.5rem; }
+        .card p { color: #aaa; margin: 0.25rem 0; }
+        .badge { display: inline-block; padding: 0.25rem 0.75rem; background: #ff6b6b; color: #fff; border-radius: 20px; font-size: 0.85rem; margin: 0.25rem; }
+        .leaderboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+        .rank-card { background: #0f1420; padding: 1.5rem; border-radius: 8px; text-align: center; border-top: 3px solid #ff6b6b; }
+        .rank-number { font-size: 2rem; color: #ff6b6b; font-weight: bold; }
+        .vote-btn { padding: 0.5rem 1rem; margin: 0.25rem; font-size: 0.9rem; }
+        .vote-up { background: #4ade80; }
+        .vote-down { background: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Isabella IA - Panel de Developers</h1>
+            <p>© Juan Alberto López Vázquez - Plataforma Colaborativa</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('estadisticas')">📊 Estadísticas</button>
+            <button class="tab-btn" onclick="switchTab('developers')">👨‍💻 Developers</button>
+            <button class="tab-btn" onclick="switchTab('mejoras')">⭐ Mejoras de Código</button>
+            <button class="tab-btn" onclick="switchTab('feedback')">💬 Feedback</button>
+            <button class="tab-btn" onclick="switchTab('analizar')">🔍 Analizar Código</button>
+        </div>
+
+        <!-- TAB: Estadísticas -->
+        <div id="estadisticas" class="tab-content active">
+            <div class="section">
+                <h2>📊 Estadísticas de Isabella</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div class="card">
+                        <h3>Auditorías Completadas</h3>
+                        <p id="audit-count" style="font-size: 2rem; color: #ff6b6b;">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Vulnerabilidades Encontradas</h3>
+                        <p id="vuln-count" style="font-size: 2rem; color: #ff6b6b;">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Mejoras Implementadas</h3>
+                        <p id="improvements-count" style="font-size: 2rem; color: #ff6b6b;">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Developers Activos</h3>
+                        <p id="dev-count" style="font-size: 2rem; color: #ff6b6b;">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Developers -->
+        <div id="developers" class="tab-content">
+            <div class="section">
+                <h2>👨‍💻 Registrar como Developer</h2>
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="dev-nombre" placeholder="Tu nombre completo">
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="dev-email" placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label>GitHub (opcional):</label>
+                    <input type="text" id="dev-github" placeholder="https://github.com/usuario">
+                </div>
+                <button class="btn" onclick="registrarDeveloper()">Registrarse</button>
+            </div>
+
+            <div class="section">
+                <h2>🏆 Leaderboard de Developers</h2>
+                <div id="leaderboard" class="leaderboard"></div>
+            </div>
+        </div>
+
+        <!-- TAB: Mejoras de Código -->
+        <div id="mejoras" class="tab-content">
+            <div class="section">
+                <h2>⭐ Proponer Mejora de Código</h2>
+                <div class="form-group">
+                    <label>ID Developer:</label>
+                    <input type="text" id="dev-id" placeholder="Tu ID de developer">
+                </div>
+                <div class="form-group">
+                    <label>Archivo a Mejorar:</label>
+                    <input type="text" id="archivo" placeholder="core/web_navigator.py">
+                </div>
+                <div class="form-group">
+                    <label>Descripción de la Mejora:</label>
+                    <textarea id="descripcion" placeholder="Describe qué mejoras propones..." rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Código Propuesto:</label>
+                    <textarea id="codigo" placeholder="Pega tu código aquí..." rows="8" style="font-family: 'Courier New', monospace;"></textarea>
+                </div>
+                <button class="btn" onclick="proponerMejora()">Proponer Mejora</button>
+            </div>
+
+            <div class="section">
+                <h2>🔄 Mejoras Pendientes de Aprobación</h2>
+                <div id="mejoras-list"></div>
+            </div>
+        </div>
+
+        <!-- TAB: Feedback -->
+        <div id="feedback" class="tab-content">
+            <div class="section">
+                <h2>💬 Enviar Feedback</h2>
+                <div class="form-group">
+                    <label>Tu Nombre (opcional):</label>
+                    <input type="text" id="feedback-usuario" placeholder="Anónimo">
+                </div>
+                <div class="form-group">
+                    <label>Tu Feedback:</label>
+                    <textarea id="feedback-texto" placeholder="¿Qué te gustaría mejorar de Isabella?" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Puntuación (1-5):</label>
+                    <input type="number" id="feedback-puntuacion" min="1" max="5" value="5" style="width: 100px;">
+                </div>
+                <button class="btn" onclick="enviarFeedback()">Enviar Feedback</button>
+            </div>
+        </div>
+
+        <!-- TAB: Analizar Código -->
+        <div id="analizar" class="tab-content">
+            <div class="section">
+                <h2>🔍 Analizar Código</h2>
+                <div class="form-group">
+                    <label>Lenguaje:</label>
+                    <input type="text" id="codigo-lenguaje" placeholder="python" value="python">
+                </div>
+                <div class="form-group">
+                    <label>Código a Analizar:</label>
+                    <textarea id="codigo-a-analizar" placeholder="Pega tu código aquí..." rows="10" style="font-family: 'Courier New', monospace;"></textarea>
+                </div>
+                <button class="btn" onclick="analizarCodigo()">Analizar</button>
+                <div id="analisis-resultado" style="margin-top: 2rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Ocultar todos los tabs
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            // Mostrar tab seleccionado
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Cargar datos si es necesario
+            if (tabName === 'estadisticas') cargarEstadisticas();
+            if (tabName === 'developers') cargarDevelopers();
+            if (tabName === 'mejoras') cargarMejoras();
+        }
+
+        function cargarEstadisticas() {
+            fetch('/api/ia/estadisticas')
+                .then(r => r.json())
+                .then(d => {
+                    document.getElementById('audit-count').textContent = d.estadisticas.auditorias_completadas;
+                    document.getElementById('vuln-count').textContent = d.estadisticas.vulnerabilidades_encontradas;
+                    document.getElementById('improvements-count').textContent = d.estadisticas.mejoras_implementadas;
+                    document.getElementById('dev-count').textContent = d.estadisticas.desarrolladores_activos;
+                })
+                .catch(e => console.error(e));
+        }
+
+        function registrarDeveloper() {
+            const data = {
+                nombre: document.getElementById('dev-nombre').value,
+                email: document.getElementById('dev-email').value,
+                github: document.getElementById('dev-github').value
+            };
+            
+            if (!data.nombre || !data.email) {
+                alert('Nombre y email requeridos');
+                return;
+            }
+            
+            fetch('/api/ia/developers/registrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(r => r.json())
+            .then(d => {
+                alert(d.mensaje);
+                console.log('ID Developer:', d.id_developer);
+                document.getElementById('dev-nombre').value = '';
+                document.getElementById('dev-email').value = '';
+                document.getElementById('dev-github').value = '';
+            })
+            .catch(e => alert('Error: ' + e));
+        }
+
+        function cargarDevelopers() {
+            fetch('/api/ia/developers/leaderboard')
+                .then(r => r.json())
+                .then(d => {
+                    const html = d.ranking.map((dev, idx) => `
+                        <div class="rank-card">
+                            <div class="rank-number">🥇</div>
+                            <h3>${dev.nombre}</h3>
+                            <p>Mejoras Aceptadas: <strong>${dev.mejoras_aceptadas}</strong></p>
+                            <p>Contribuciones: <strong>${dev.contribuciones}</strong></p>
+                        </div>
+                    `).join('');
+                    document.getElementById('leaderboard').innerHTML = html;
+                })
+                .catch(e => console.error(e));
+        }
+
+        function proponerMejora() {
+            const data = {
+                developer_id: document.getElementById('dev-id').value,
+                archivo: document.getElementById('archivo').value,
+                descripcion: document.getElementById('descripcion').value,
+                codigo: document.getElementById('codigo').value
+            };
+            
+            if (!data.developer_id || !data.archivo || !data.descripcion || !data.codigo) {
+                alert('Todos los campos son requeridos');
+                return;
+            }
+            
+            fetch('/api/ia/mejoras/proponer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(r => r.json())
+            .then(d => {
+                alert(d.mensaje);
+                document.getElementById('dev-id').value = '';
+                document.getElementById('archivo').value = '';
+                document.getElementById('descripcion').value = '';
+                document.getElementById('codigo').value = '';
+            })
+            .catch(e => alert('Error: ' + e));
+        }
+
+        function cargarMejoras() {
+            fetch('/api/ia/mejoras/pendientes')
+                .then(r => r.json())
+                .then(d => {
+                    const html = d.mejoras.map(mejora => `
+                        <div class="card">
+                            <h3>${mejora.archivo}</h3>
+                            <p><strong>Developer:</strong> ${mejora.developer_nombre}</p>
+                            <p><strong>Estado:</strong> <span class="badge">${mejora.estado}</span></p>
+                            <p><strong>Descripción:</strong> ${mejora.descripcion}</p>
+                            <p><strong>Votos:</strong> ${mejora.votos}/5</p>
+                            <button class="btn vote-up" onclick="votarMejora('${mejora.id}', 1)">👍 Votar a Favor</button>
+                            <button class="btn vote-down" onclick="votarMejora('${mejora.id}', -1)">👎 Votar en Contra</button>
+                        </div>
+                    `).join('');
+                    document.getElementById('mejoras-list').innerHTML = html;
+                })
+                .catch(e => console.error(e));
+        }
+
+        function votarMejora(mejoraId, voto) {
+            fetch(`/api/ia/mejoras/votar/${mejoraId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ developer_id: 'votante', voto: voto })
+            })
+            .then(r => r.json())
+            .then(d => {
+                alert(d.mensaje);
+                cargarMejoras();
+            })
+            .catch(e => alert('Error: ' + e));
+        }
+
+        function enviarFeedback() {
+            const data = {
+                usuario: document.getElementById('feedback-usuario').value || 'Anónimo',
+                feedback: document.getElementById('feedback-texto').value,
+                puntuacion: parseInt(document.getElementById('feedback-puntuacion').value)
+            };
+            
+            if (!data.feedback) {
+                alert('El feedback no puede estar vacío');
+                return;
+            }
+            
+            fetch('/api/ia/feedback/registrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(r => r.json())
+            .then(d => {
+                alert('Gracias por tu feedback');
+                document.getElementById('feedback-texto').value = '';
+            })
+            .catch(e => alert('Error: ' + e));
+        }
+
+        function analizarCodigo() {
+            const data = {
+                codigo: document.getElementById('codigo-a-analizar').value,
+                lenguaje: document.getElementById('codigo-lenguaje').value
+            };
+            
+            if (!data.codigo) {
+                alert('Debes proporcionar código para analizar');
+                return;
+            }
+            
+            fetch('/api/ia/codigo/analizar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(r => r.json())
+            .then(d => {
+                let html = `<h3>Resultados del Análisis</h3>`;
+                html += `<p><strong>Lenguaje:</strong> ${d.lenguaje}</p>`;
+                html += `<p><strong>Score de Calidad:</strong> <span class="badge">${d.score_calidad.toFixed(0)}%</span></p>`;
+                
+                if (d.problemas.length > 0) {
+                    html += `<h4 style="color: #ff6b6b; margin-top: 1rem;">Problemas Encontrados:</h4>`;
+                    html += d.problemas.map(p => `<div class="card"><p><strong>${p.tipo}:</strong> ${p.descripcion}</p></div>`).join('');
+                }
+                
+                if (d.sugerencias.length > 0) {
+                    html += `<h4 style="color: #ff6b6b; margin-top: 1rem;">Sugerencias:</h4>`;
+                    html += d.sugerencias.map(s => `<div class="card"><p><strong>${s.tipo}:</strong> ${s.descripcion}</p></div>`).join('');
+                }
+                
+                document.getElementById('analisis-resultado').innerHTML = html;
+            })
+            .catch(e => {
+                document.getElementById('analisis-resultado').innerHTML = `<p style="color: #ff6b6b;">Error: ${e}</p>`;
+            });
+        }
+
+        // Cargar estadísticas al iniciar
+        cargarEstadisticas();
+    </script>
+</body>
+</html>
