@@ -1,0 +1,58 @@
+"""
+LICENCIA MIT - ISABELLA v7.0
+
+Copyright (c) 2024 Juan Alberto López Vázquez
+
+Se concede permiso, sin costo alguno, a cualquier persona que obtenga una copia
+de este software y archivos de documentación asociados ("Software"), para
+tratar el Software sin restricción, incluyendo sin limitación los derechos de
+usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y/o
+vender copias del Software, y para permitir a las personas a las que se 
+proporcione el Software que lo hagan, sujeto a las siguientes condiciones:
+
+La anterior notificación de derechos de autor y esta notificación de permisos
+deben incluirse en todas las copias o partes sustanciales del Software.
+
+EL SOFTWARE SE PROPORCIONA "TAL COMO ESTÁ", SIN GARANTÍA DE NINGÚN TIPO,
+EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE
+COMERCIALIZACIÓN, APTITUD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN.
+EN NINGÚN CASO SERÁN LOS AUTORES O DERECHOHABIENTES DE DERECHOS DE AUTOR
+RESPONSABLES POR NINGÚN RECLAMO, DAÑOS U OTRA RESPONSABILIDAD, YA SEA EN
+UNA ACCIÓN DE CONTRATO, AGRAVIO U DE OTRA MANERA, QUE SURJA DE, FUERA DE O
+EN CONEXIÓN CON EL SOFTWARE O EL USO U OTRO TIPO DE MANEJO DEL SOFTWARE.
+
+═══════════════════════════════════════════════════════════════════════════
+
+⚠️  DISCLAIMER DE RESPONSABILIDAD ADICIONAL:
+
+Isabella v7.0 es una herramienta de pentesting y auditoría de seguridad.
+La responsabilidad legal total recae en el usuario final. El creador
+(Juan Alberto López Vázquez) NO es responsable de:
+
+✗ Acceso no autorizado a sistemas
+✗ Violación de privacidad
+✗ Robo o exfiltración de datos
+✗ Daño a sistemas o infraestructura
+✗ Crimen cibernético de cualquier tipo
+✗ Violación de leyes locales o internacionales
+
+EL USUARIO ACEPTA USAR ISABELLA SOLO PARA:
+✓ Sistemas propios
+✓ Auditorías con autorización escrita
+✓ Laboratorios de capacitación autorizada
+✓ Programas de bug bounty públicos
+✓ Investigación académica autorizada
+✓ Cumplimiento normativo
+
+Al usar Isabella v7.0, el usuario renuncia a cualquier derecho legal
+contra el creador por cualquier daño resultante del uso de esta herramienta.
+
+═══════════════════════════════════════════════════════════════════════════
+
+CREADOR Y PROPIETARIO ÚNICO:
+Juan Alberto López Vázquez
+
+FECHA: 2024
+LICENCIA: MIT
+VERSIÓN: 7.0
+"""
