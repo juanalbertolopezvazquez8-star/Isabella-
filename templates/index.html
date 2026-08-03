@@ -3,108 +3,507 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isabella v7.0 - Pentesting Profesional</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Isabella v7.0 - Asistente de Ciberseguridad</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0e27; color: #fff; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        .hero { text-align: center; padding: 4rem 0; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; color: #00ff88; text-shadow: 0 0 20px #00ff88; }
-        .hero p { font-size: 1.2rem; color: #ccc; margin-bottom: 2rem; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
-        .feature { background: linear-gradient(135deg, #1a1f3a, #0f1420); padding: 2rem; border-radius: 10px; border-left: 4px solid #00ff88; }
-        .feature h3 { color: #00ff88; margin-bottom: 1rem; }
-        .feature p { color: #aaa; line-height: 1.6; }
-        .btn { display: inline-block; padding: 0.75rem 2rem; background: #00ff88; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; margin: 0.5rem; transition: all 0.3s; }
-        .btn:hover { background: #00cc6a; transform: translateY(-2px); }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0; text-align: center; }
-        .stat-box { background: #1a1f3a; padding: 2rem; border-radius: 10px; }
-        .stat-box h2 { font-size: 2.5rem; color: #00ff88; margin-bottom: 0.5rem; }
-        .stat-box p { color: #aaa; }
-        .warning { background: #ff6b6b; color: #fff; padding: 1.5rem; border-radius: 5px; margin: 2rem 0; }
-        .creator { text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #333; color: #aaa; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #00ff88;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            color: #000;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #0a0e27;
+            font-weight: 500;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: linear-gradient(135deg, #1a1f3a, #0f1420);
+            border: 2px solid #00ff88;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+        }
+
+        .panel h2 {
+            color: #00ff88;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #00ff88;
+            padding-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: #0f1420;
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            background: #1a1f3a;
+        }
+
+        .form-group textarea::placeholder {
+            color: #00aa66;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #00cc6a, #00aa55);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .response-container {
+            min-height: 200px;
+        }
+
+        .response {
+            background: #0f1420;
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .response-title {
+            color: #00ff88;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .response-content {
+            background: #0a0e27;
+            border-left: 4px solid #00ff88;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #00ff88;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .error {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: bold;
+            border-left: 4px solid #ff0000;
+        }
+
+        .success {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: bold;
+            border-left: 4px solid #00ff88;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .loader {
+            border: 4px solid #0f1420;
+            border-top: 4px solid #00ff88;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #00ff88;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #1a3a5a, #0f2a3a);
+            border-left: 4px solid #00ff88;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            color: #aaa;
+        }
+
+        .info-box h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .disclaimer {
+            background: #ff6b6b;
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            font-weight: bold;
+            text-align: center;
+            border-left: 5px solid #ff0000;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1a1f3a, #0f1420);
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: #00ff88;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #aaa;
+            border-top: 2px solid #00ff88;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbar::-webkit-scrollbar-track {
+            background: #0f1420;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 4px;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #00cc6a;
+        }
+
+        .response, .response-content {
+            scrollbar-color: #00ff88 #0f1420;
+            scrollbar-width: thin;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="hero">
+        <!-- Header -->
+        <div class="header">
             <h1>🔥 ISABELLA v7.0 🔥</h1>
-            <p>Plataforma Profesional de Pentesting y Ciberseguridad</p>
-            <p style="color: #999; font-size: 0.9rem;">© 2024 Juan Alberto López Vázquez - Único Creador</p>
+            <p>Asistente Profesional de Ciberseguridad y Pentesting</p>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">© 2024 Juan Alberto López Vázquez</p>
         </div>
 
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            ⚠️ DISCLAIMER: Esta herramienta es SOLO para uso autorizado en sistemas bajo tu control.
+            El usuario asume total responsabilidad por cualquier daño causado. Cumple con todas las leyes aplicables.
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <h3>ℹ️ Cómo usar Isabella</h3>
+            <p>Escribe tu consulta técnica en el campo de texto y presiona "Procesar Consulta". Isabella analizará tu pregunta y proporcionará respuestas técnicas detalladas sobre pentesting, vulnerabilidades, técnicas de ataque y análisis de seguridad.</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Input Panel -->
+            <div class="panel">
+                <h2>💬 Consulta a Isabella</h2>
+                <div class="form-group">
+                    <label for="prompt">Ingresa tu consulta técnica:</label>
+                    <textarea id="prompt" placeholder="Ej: ¿Cuáles son los payloads más efectivos para SQL injection?\n\nEscribe cualquier consulta sobre pentesting, vulnerabilidades, técnicas de ataque, análisis de seguridad, etc."></textarea>
+                </div>
+                <button class="btn" id="submitBtn" onclick="procesarConsulta()">Procesar Consulta</button>
+                <div id="inputStatus"></div>
+            </div>
+
+            <!-- Response Panel -->
+            <div class="panel">
+                <h2>🤖 Respuesta de Isabella</h2>
+                <div class="response-container">
+                    <div class="loading" id="loading">
+                        <div class="loader"></div>
+                        <div class="loading-text">Procesando tu consulta...</div>
+                    </div>
+                    <div class="response" id="response" style="display:none;">
+                        <div class="response-title">Respuesta:</div>
+                        <div class="response-content" id="responseContent" class="scrollbar"></div>
+                    </div>
+                    <div id="statusMessage"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
         <div class="stats">
-            <div class="stat-box">
-                <h2>600+</h2>
-                <p>Herramientas Integradas</p>
+            <div class="stat-card">
+                <div class="stat-label">Consultas Procesadas</div>
+                <div class="stat-value" id="stat-queries">0</div>
             </div>
-            <div class="stat-box">
-                <h2>50+</h2>
-                <p>API Endpoints</p>
+            <div class="stat-card">
+                <div class="stat-label">Estado del Servidor</div>
+                <div class="stat-value" id="stat-status">🔴</div>
             </div>
-            <div class="stat-box">
-                <h2>100%</h2>
-                <p>Funcional</p>
-            </div>
-            <div class="stat-box">
-                <h2>∞</h2>
-                <p>Escalabilidad</p>
+            <div class="stat-card">
+                <div class="stat-label">Última Consulta</div>
+                <div class="stat-value" id="stat-time">N/A</div>
             </div>
         </div>
 
-        <div class="warning">
-            <strong>⚠️ DISCLAIMER LEGAL:</strong><br>
-            Esta herramienta es SOLO para auditorías autorizadas. El usuario asume TOTAL responsabilidad de su uso.
-        </div>
-
-        <div class="features">
-            <div class="feature">
-                <h3>🌐 Navegación Web</h3>
-                <p>Navegación avanzada con proxy chains, Tor, VPN y SSH tunneling. Bypass automático de firewalls.</p>
-            </div>
-            <div class="feature">
-                <h3>📥 Extracción de Archivos</h3>
-                <p>Búsqueda, descarga y espejeo de sitios web. Preservación de estructura de directorios.</p>
-            </div>
-            <div class="feature">
-                <h3>💥 Explotación Web</h3>
-                <p>SQLi, XSS, CSRF. Escaneo completo de vulnerabilidades con generación de payloads.</p>
-            </div>
-            <div class="feature">
-                <h3>🔓 Brute Force</h3>
-                <p>SSH, FTP, HTTP. Ataque paralelo multi-threading con diccionarios integrados.</p>
-            </div>
-            <div class="feature">
-                <h3>🛠️ Herramientas Reales</h3>
-                <p>600+ herramientas Kali integradas: nmap, sqlmap, nikto, hashcat, hydra y más.</p>
-            </div>
-            <div class="feature">
-                <h3>🤖 Agente Inteligente</h3>
-                <p>Isabella: auto-aprendizaje, auto-actualización segura y análisis inteligente.</p>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin: 3rem 0;">
-            <a href="/dashboard" class="btn">📊 Ir al Dashboard</a>
-            <a href="/pentesting" class="btn">🔥 Panel de Pentesting</a>
-            <a href="/api/health" class="btn">✅ Ver Estado API</a>
-        </div>
-
-        <div class="creator">
-            <h3>Isabella v7.0</h3>
-            <p><strong>Creador y Propietario Único:</strong></p>
-            <p>Juan Alberto López Vázquez</p>
-            <p style="margin-top: 1rem; font-size: 0.85rem;">
-                Licencia: MIT<br>
-                Fecha: 2024<br>
-                Versión: 7.0<br>
-                Estado: ✅ Producción
-            </p>
-            <p style="margin-top: 2rem; font-size: 0.8rem; color: #666;">
-                ⚠️ El usuario es responsable de cumplir todas las leyes aplicables
-            </p>
-        </div>
+        <!-- Footer -->
+        <footer>
+            <p>Isabella v7.0 - Asistente de Ciberseguridad Sin Filtros</p>
+            <p>© 2024 Juan Alberto López Vázquez - Desarrollador Único</p>
+            <p style="margin-top: 1rem; font-size: 0.85rem;">Para uso exclusivo en auditorías autorizadas</p>
+            <p style="margin-top: 1rem; font-size: 0.85rem;">Backend: Python Flask + Ollama | Frontend: HTML5 + JavaScript</p>
+        </footer>
     </div>
+
+    <script>
+        // Configuración
+        const API_URL = 'http://localhost:5000/api/chat';
+        let queryCount = 0;
+        let serverStatus = '🔴 Desconectado';
+
+        // Verificar estado del servidor
+        async function verificarServidor() {
+            try {
+                const response = await fetch('http://localhost:5000/api/health', {
+                    method: 'GET',
+                    timeout: 5000
+                });
+                if (response.ok) {
+                    serverStatus = '🟢 Conectado';
+                    document.getElementById('stat-status').textContent = serverStatus;
+                } else {
+                    serverStatus = '🔴 Desconectado';
+                    document.getElementById('stat-status').textContent = serverStatus;
+                }
+            } catch (error) {
+                serverStatus = '🔴 Desconectado';
+                document.getElementById('stat-status').textContent = serverStatus;
+            }
+        }
+
+        // Procesar consulta
+        async function procesarConsulta() {
+            const prompt = document.getElementById('prompt').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const response = document.getElementById('response');
+            const statusMessage = document.getElementById('statusMessage');
+            const responseContent = document.getElementById('responseContent');
+
+            // Validaciones
+            if (!prompt) {
+                statusMessage.innerHTML = '<div class="error">❌ Error: Por favor, ingresa una consulta antes de procesar.</div>';
+                return;
+            }
+
+            if (prompt.length < 5) {
+                statusMessage.innerHTML = '<div class="error">❌ Error: La consulta debe tener al menos 5 caracteres.</div>';
+                return;
+            }
+
+            // Mostrar cargando
+            statusMessage.innerHTML = '';
+            response.style.display = 'none';
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Procesando...';
+
+            try {
+                // Realizar petición al servidor
+                const fetchResponse = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                // Ocultar cargando
+                loading.style.display = 'none';
+
+                if (!fetchResponse.ok) {
+                    // Error HTTP
+                    const errorData = await fetchResponse.json();
+                    statusMessage.innerHTML = `<div class="error">❌ Error ${fetchResponse.status}: ${errorData.error || 'Error desconocido del servidor'}</div>`;
+                    return;
+                }
+
+                const data = await fetchResponse.json();
+
+                if (data.response) {
+                    // Éxito
+                    responseContent.textContent = data.response;
+                    response.style.display = 'block';
+                    statusMessage.innerHTML = '<div class="success">✅ Consulta procesada exitosamente</div>';
+
+                    // Actualizar estadísticas
+                    queryCount++;
+                    document.getElementById('stat-queries').textContent = queryCount;
+                    document.getElementById('stat-time').textContent = new Date().toLocaleTimeString('es-ES');
+                } else {
+                    // Respuesta sin contenido
+                    statusMessage.innerHTML = '<div class="error">❌ Error: El servidor no devolvió una respuesta válida.</div>';
+                }
+
+            } catch (error) {
+                // Error de conexión
+                loading.style.display = 'none';
+                statusMessage.innerHTML = `<div class="error">❌ Error de conexión: ${error.message}<br><br>⚠️ Asegúrate de que:<br>1. El servidor Python (app.py) esté corriendo en http://localhost:5000<br>2. Ollama esté instalado y el modelo llama3.2-uncensored esté disponible<br>3. Ejecutaste: pip install -r requirements.txt</div>`;
+            } finally {
+                // Restaurar botón
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Procesar Consulta';
+            }
+        }
+
+        // Permitir Enter para enviar (Ctrl+Enter o Shift+Enter)
+        document.getElementById('prompt').addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.shiftKey) && e.key === 'Enter') {
+                procesarConsulta();
+            }
+        });
+
+        // Verificar servidor al cargar
+        window.addEventListener('load', function() {
+            verificarServidor();
+            setInterval(verificarServidor, 5000); // Verificar cada 5 segundos
+        });
+
+        // Mostrar mensaje de bienvenida
+        window.addEventListener('load', function() {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.innerHTML = '<div class="success">✅ Bienvenido a Isabella v7.0 - Listo para procesar consultas</div>';
+        });
+    </script>
 </body>
 </html>

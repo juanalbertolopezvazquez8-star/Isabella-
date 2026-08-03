@@ -1,406 +1,299 @@
-# ISABELLA v7.0 - PLATAFORMA PROFESIONAL DE PENTESTING
+# Isabella v7.0 - Asistente de Ciberseguridad Sin Filtros
 
-**© 2024 Juan Alberto López Vázquez - Único Creador y Propietario**
+**Isabella** es una plataforma profesional de pentesting y ciberseguridad con un motor de IA integrado sin filtros de censura.
 
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/downloads/)
-[![License MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)]
+## 📋 Características
 
----
+✅ **Motor IA Sin Filtros** - Responde a consultas técnicas sin restricciones éticas  
+✅ **600+ Herramientas Kali** - Catálogo completo integrado  
+✅ **Generador de Payloads** - SQL Injection, XSS, RCE, y más  
+✅ **Técnicas de Bypass** - WAF, IDS, IPS, Antivirus  
+✅ **Post-Explotación** - Escalada de privilegios, movimiento lateral  
+✅ **API REST Completa** - Endpoints para todas las funciones  
+✅ **Interfaz Web Intuitiva** - Panel profesional de control  
+✅ **100% Offline** - Funciona sin conexión a internet (con Ollama)  
 
-## ⚠️ DISCLAIMER LEGAL
+## 🛠️ Requisitos
 
-```
-RESPONSABILIDAD TOTAL DEL USUARIO FINAL
+- Python 3.8+
+- [Ollama](https://ollama.ai) instalado
+- Modelo `llama3.2-uncensored` descargado (opcional, usa `llama2` como fallback)
 
-Esta herramienta es ÚNICAMENTE para:
-✓ Sistemas propios
-✓ Auditorías autorizadas por escrito
-✓ Laboratorios de prueba
-✓ Programas de bug bounty públicos
+## 📦 Instalación
 
-USO ILEGAL:
-✗ Acceso no autorizado a sistemas
-✗ Robo de datos
-✗ Crimen cibernético
-✗ Cualquier violación de ley
-
-El usuario ASUME TOTAL RESPONSABILIDAD por cualquier daño.
-Juan Alberto López Vázquez no es responsable del mal uso.
-```
-
----
-
-## 🚀 CARACTERÍSTICAS PRINCIPALES
-
-### 🌐 Navegación Web Profesional
-- ✅ Navegación a cualquier sitio web
-- ✅ Proxy chains (múltiples proxies en cadena)
-- ✅ Tor integration (anonimato completo)
-- ✅ VPN + SSH tunneling
-- ✅ Spoofing de User-Agent
-- ✅ Cambio de IP automático
-- ✅ Manejo avanzado de cookies/sesiones
-
-### 📥 Extracción de Archivos
-- ✅ Búsqueda de archivos por tipo
-- ✅ Descarga individual o por lotes
-- ✅ Espejeo completo de sitios web
-- ✅ Preservación de estructura
-- ✅ Resume de descargas interrumpidas
-
-### 💥 Explotación Web Real
-- ✅ Inyección SQL (SQLi) - 4 tipos
-- ✅ Cross-Site Scripting (XSS) - Múltiples vectores
-- ✅ CSRF detection
-- ✅ Escaneo completo de vulnerabilidades
-- ✅ Bypass de WAF automático
-
-### 🔓 Ataque de Credenciales
-- ✅ SSH Brute Force (multi-threading)
-- ✅ FTP Brute Force
-- ✅ HTTP/HTTPS Brute Force
-- ✅ Ataque paralelo (hasta 10 workers)
-- ✅ Diccionarios preinstalados
-
-### 🛠️ 600+ Herramientas Kali Integradas
-- ✅ Reconocimiento (nmap, zmap, masscan)
-- ✅ Vulnerabilidades (nikto, sqlmap, openvas)
-- ✅ Explotación (metasploit, beef)
-- ✅ Wireless (aircrack-ng, reaver)
-- ✅ Forense (volatility, autopsy)
-- ✅ Bypass (Tor, iodine, dnscat2)
-
-### 🤖 Agente Isabella Inteligente
-- ✅ Auto-aprendizaje de feedback
-- ✅ Auto-actualización controlada
-- ✅ Metaprogramación segura
-- ✅ Respuestas contextuales
-- ✅ Auditoría completa
-
----
-
-## 📋 REQUISITOS DEL SISTEMA
+### 1. Clonar el repositorio
 
 ```bash
-# Sistema Operativo
-✓ Linux (Ubuntu 20.04+, Debian, Kali)
-✓ macOS 10.15+
-✓ Windows 10/11 (con WSL2)
-
-# Software
-✓ Python 3.9+
-✓ pip (gestor de paquetes Python)
-✓ git
-
-# Hardware Mínimo
-✓ 4GB RAM
-✓ 2GB espacio disco
-✓ Procesador dual-core
-```
-
----
-
-## ⚡ INSTALACIÓN RÁPIDA (5 MINUTOS)
-
-### Opción 1: Script Automático (Recomendado)
-
-```bash
-# Clonar repositorio
 git clone https://github.com/juanalbertolopezvazquez8-star/Isabella-.git
 cd Isabella-
-
-# Ejecutar instalador
-chmod +x install_dependencies.sh
-./install_dependencies.sh
-
-# Iniciar
-./run.sh
 ```
 
-### Opción 2: Manual
+### 2. Instalar dependencias
 
 ```bash
-# 1. Clonar
-git clone https://github.com/juanalbertolopezvazquez8-star/Isabella-.git
-cd Isabella-
-
-# 2. Crear entorno virtual
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate  # Windows
-
-# 3. Instalar dependencias
 pip install -r requirements.txt
+```
 
-# 4. Instalar herramientas del sistema (Linux/Mac)
-sudo apt-get install nmap sqlmap aircrack-ng hashcat hydra
+### 3. Instalar y ejecutar Ollama
 
-# 5. Inicializar base de datos
+Descarga Ollama desde [ollama.ai](https://ollama.ai)
+
+```bash
+# Descargar modelo sin filtros
+ollama pull llama3.2-uncensored
+
+# O descargar modelo alternativo
+ollama pull llama2
+```
+
+### 4. Inicializar base de datos
+
+```bash
 python init_db.py
+```
 
-# 6. Ejecutar
+### 5. Ejecutar servidor
+
+```bash
 python app.py
 ```
 
-### Opción 3: Docker (Más Fácil)
+El servidor iniciará en `http://localhost:5000`
 
-```bash
-# Construir imagen
-docker-compose build
+## 🌐 Uso
 
-# Ejecutar
-docker-compose up
+### Acceder a la interfaz web
 
-# Acceder
-http://localhost:5000
+Abre tu navegador en: **http://localhost:5000**
+
+### Estructura de carpetas
+
+```
+Isabella/
+├── app.py                 # Servidor Flask principal
+├── init_db.py            # Inicializador de base de datos
+├── requirements.txt      # Dependencias Python
+├── templates/
+│   ├── index.html        # Interfaz principal
+│   └── testing-center.html # Centro de pruebas
+├── static/
+│   ├── css/              # Estilos
+│   └── js/               # JavaScript
+├── core/
+│   ├── isabella_ai.py           # Sistema IA principal
+│   ├── isabella_ai_engine.py    # Motor IA sin filtros
+│   ├── kali_tools_catalog.py    # Catálogo de herramientas
+│   └── bypass_engine.py         # Técnicas de bypass
+├── api/
+│   ├── ia_routes.py      # Rutas de IA
+│   ├── pentesting_routes.py
+│   ├── tools_routes.py
+│   └── admin_routes.py
+├── data/                 # Datos persistentes
+├── logs/                 # Logs de auditoría
+└── README.md             # Este archivo
 ```
 
----
+## 📡 Endpoints de la API
 
-## 🎯 USO RÁPIDO
+### Chat Principal
 
-### 1. Navegar a una Web
 ```bash
-curl -X POST http://localhost:5000/api/pentesting/navigate \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://example.com", "use_tor": true}'
+POST /api/chat
+Content-Type: application/json
+
+{
+  "prompt": "¿Cuáles son los payloads SQL injection más efectivos?"
+}
 ```
 
-### 2. Rastrear un Sitio Completo
-```bash
-curl -X POST http://localhost:5000/api/pentesting/crawl \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://example.com", "max_depth": 2}'
+**Respuesta:**
+```json
+{
+  "response": "Respuesta del modelo IA...",
+  "timestamp": "2024-01-15T10:30:00",
+  "model": "llama3.2-uncensored"
+}
 ```
 
-### 3. Extraer Archivos
+### Motor IA Integrado
+
 ```bash
-curl -X POST http://localhost:5000/api/pentesting/extract-files \
-  -H "Content-Type: application/json" \
-  -d '{
-    "url": "https://example.com",
-    "file_types": [".pdf", ".zip", ".doc"],
-    "output_dir": "./downloads"
-  }'
+# Consultar IA integrada
+POST /api/ia/consultar
+{"consulta": "Payloads XSS"}
+
+# Obtener payloads de categoría
+GET /api/ia/payloads/sql_injection
+
+# Técnicas de bypass
+GET /api/ia/tecnicas-bypass
+
+# Estadísticas
+GET /api/ia/estadisticas
 ```
 
-### 4. Escanear Vulnerabilidades
+### Pentesting
+
 ```bash
-curl -X POST http://localhost:5000/api/pentesting/scan-vulnerabilities \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://example.com/admin.php"}'
+# Navegación web
+POST /api/pentesting/navigate
+{"url": "https://example.com"}
+
+# Rastrear sitio
+POST /api/pentesting/crawl
+{"url": "https://example.com", "max_depth": 2}
+
+# Escanear vulnerabilidades
+POST /api/pentesting/scan-vulnerabilities
+{"url": "https://example.com"}
 ```
 
-### 5. Brute Force HTTP
+### Herramientas Integradas
+
 ```bash
-curl -X POST http://localhost:5000/api/pentesting/http-bruteforce \
-  -H "Content-Type: application/json" \
-  -d '{
-    "url": "https://example.com/login",
-    "usernames": ["admin", "user"],
-    "passwords": ["123456", "password"]
-  }'
+# Ejecutar Nmap
+POST /api/tools/nmap
+{"target": "192.168.1.1", "arguments": "-sV -p-"}
+
+# Ejecutar SQLmap
+POST /api/tools/sqlmap
+{"url": "https://example.com/?id=1"}
+
+# Ejecutar Nikto
+POST /api/tools/nikto
+{"url": "https://example.com"}
 ```
 
----
+## 🔐 Disclaimer
 
-## 📡 API ENDPOINTS COMPLETOS
+⚠️ **IMPORTANTE:**
 
-### Navegación Web
-- `POST /api/pentesting/navigate` - Navegar a URL
-- `POST /api/pentesting/crawl` - Rastrear sitio
-- `POST /api/pentesting/extract-files` - Descargar archivos
-- `POST /api/pentesting/mirror` - Espejear sitio completo
+Esta herramienta está diseñada para:
+- Auditorías de seguridad autorizadas
+- Investigación en ciberseguridad
+- Entornos de laboratorio controlados
+- Sistemas bajo tu control exclusivo
 
-### Explotación
-- `POST /api/pentesting/scan-vulnerabilities` - Escaneo completo
-- `POST /api/pentesting/test-sqli` - Prueba SQLi
-- `POST /api/pentesting/test-xss` - Prueba XSS
-- `POST /api/pentesting/get-headers` - Headers HTTP
+**El usuario asume total responsabilidad por cualquier daño causado.**
 
-### Credenciales
-- `POST /api/pentesting/ssh-bruteforce` - SSH
-- `POST /api/pentesting/http-bruteforce` - HTTP login
-- `POST /api/pentesting/ftp-bruteforce` - FTP
+Cumple con todas las leyes y regulaciones aplicables en tu jurisdicción.
 
-### Herramientas
-- `POST /api/tools/nmap` - Escaneo de puertos
-- `POST /api/tools/hashcat` - Cracking de hashes
-- `POST /api/tools/sqlmap` - Automatización SQLi
+## 📝 Configuración Avanzada
 
-### Sistema
-- `GET /api/admin/status` - Estado del sistema
-- `GET /api/admin/logs` - Logs de auditoría
-- `POST /api/admin/report` - Generar reporte
+### Cambiar modelo Ollama
 
----
+Edita `app.py` línea 33:
 
-## 🎓 TUTORIALES
-
-### Tutorial 1: Auditoría Web Completa
-1. Navegar al sitio
-2. Rastrear estructura
-3. Extraer información
-4. Escanear vulnerabilidades
-5. Generar reporte
-
-### Tutorial 2: Cracking de Contraseñas
-1. Obtener hashes
-2. Identificar tipo de hash
-3. Ejecutar hashcat
-4. Analizar resultados
-
-### Tutorial 3: Penetration Testing
-1. Reconocimiento (OSINT)
-2. Escaneo de puertos
-3. Enumeración de servicios
-4. Búsqueda de vulnerabilidades
-5. Explotación
-6. Post-explotación
-7. Reporte final
-
----
-
-## 📊 DASHBOARD
-
-Accede a: `http://localhost:5000`
-
-**Características:**
-- 📈 Gráficos de auditorías
-- 🔍 Historial de escaneos
-- 📥 Archivos descargados
-- 🚨 Vulnerabilidades encontradas
-- 👤 Usuarios y permisos
-- 📝 Reportes generados
-
----
-
-## 🔧 CONFIGURACIÓN AVANZADA
-
-### Usar con Tor
 ```python
-navigator = AdvancedWebNavigator(use_tor=True)
-# Todos los requests se harán a través de Tor
+MODEL_NAME = "tu-modelo-aqui"
 ```
 
-### Configurar Proxies
+### Personalizar system prompt
+
+Edita `app.py` líneas 45-57:
+
 ```python
-proxies = ['http://proxy1.com:8080', 'http://proxy2.com:8080']
-navigator = AdvancedWebNavigator(use_proxy=True)
-navigator._configure_proxy(session, proxies)
+SYSTEM_PROMPT = "Tu instrucción personalizada aquí..."
 ```
 
-### Multi-threading
+### Configurar puerto
+
+Edita `app.py` línea 315:
+
 ```python
-forcer = SSHBruteForcer(target)
-results = forcer.brute_force(usernames, passwords, max_workers=10)
-# Ataque paralelo con 10 hilos
+app.run(host='0.0.0.0', port=5000)  # Cambiar puerto aquí
 ```
 
----
+## 🐛 Solución de Problemas
 
-## 📚 DOCUMENTACIÓN
+### "Error: Ollama no está instalado"
 
-- [LEGAL.md](docs/LEGAL.md) - Términos legales completos
-- [USUARIO_FINAL.md](docs/USUARIO_FINAL.md) - Guía del usuario
-- [API_REFERENCE.md](docs/API_REFERENCE.md) - Referencia API
-- [TUTORIAL.md](docs/TUTORIAL.md) - Tutoriales paso a paso
-- [INSTALACION.md](docs/INSTALACION.md) - Problemas de instalación
-
----
-
-## 🐛 SOLUCIÓN DE PROBLEMAS
-
-### Error: "No module named 'paramiko'"
 ```bash
-pip install paramiko
+# Descargar desde ollama.ai e instalar
+# Luego ejecutar:
+pip install ollama
 ```
 
-### Error: "Connection refused"
+### "Error de conexión en http://localhost:5000"
+
+1. Verifica que `app.py` esté ejecutándose
+2. Abre http://localhost:5000 en el navegador
+3. Verifica el puerto 5000 no esté en uso
+
+### "Modelo no encontrado"
+
 ```bash
-# Verificar que el servidor está corriendo
-python app.py
-
-# Verificar puerto 5000
-lsof -i :5000
+# Descargar modelo
+ollama pull llama3.2-uncensored
 ```
 
-### Error: "Tor no está disponible"
+## 📚 Documentación Técnica
+
+### Arquitectura
+
+- **Frontend:** HTML5 + JavaScript Vanilla (CORS habilitado)
+- **Backend:** Python Flask + Ollama
+- **Motor IA:** Local (sin dependencias externas de terceros)
+- **Base de Datos:** JSON (escalable a SQL)
+
+### Base de Conocimiento
+
+El motor IA integrado incluye:
+- 8 categorías de payloads
+- 10+ técnicas de bypass
+- 600+ herramientas Kali
+- Módulos Metasploit
+- Técnicas de post-explotación
+
+## 👨‍💻 Desarrollo
+
+### Crear nuevo endpoint
+
+```python
+@app.route('/api/tu-endpoint', methods=['POST'])
+def tu_endpoint():
+    try:
+        data = request.get_json()
+        # Tu lógica aquí
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+```
+
+### Ejecutar tests
+
 ```bash
-# Instalar Tor
-sudo apt-get install tor
-sudo service tor start
+pytest tests/
 ```
 
----
+## 🤝 Contribuciones
 
-## 🤝 CONTRIBUIR
+Las contribuciones son bienvenidas. Por favor:
 
-Para reportar bugs o sugerir mejoras:
+1. Fork el repositorio
+2. Crea una rama (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
-1. Abre un Issue en GitHub
-2. Describe el problema detalladamente
-3. Incluye pasos para reproducir
-4. Adjunta logs si es necesario
+## 📄 Licencia
 
----
+Este proyecto está bajo licencia MIT.
 
-## 📄 LICENCIA
+## 👤 Autor
 
-```
-MIT License
+**Juan Alberto López Vázquez**
+- GitHub: [@juanalbertolopezvazquez8-star](https://github.com/juanalbertolopezvazquez8-star)
+- Email: juanalbertolopezvazquez8@gmail.com
+- Única persona responsable del desarrollo
 
-Copyright (c) 2024 Juan Alberto López Vázquez
+## ⭐ Soporte
 
-Permiso concedido, gratuito, a cualquier persona que obtenga una copia
-de este software y archivos de documentación asociados ("Software"),
-para tratar el Software sin restricción, incluyendo sin limitación
-los derechos de usar, copiar, modificar, fusionar, publicar, distribuir,
-de sublicenciar y/o vender copias del Software...
-
-RESPONSABILIDAD: El usuario final es completamente responsable del
-uso de esta herramienta. El autor no es responsable de daños causados
-por mal uso.
-```
+Si encuentras problemas o tienes sugerencias, abre un issue en GitHub.
 
 ---
 
-## 📞 SOPORTE
-
-- 🐛 **Issues**: [GitHub Issues](https://github.com/juanalbertolopezvazquez8-star/Isabella-/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/juanalbertolopezvazquez8-star/Isabella-/discussions)
-- 📧 **Email**: juanalbertolopezvazquez8@gmail.com
-
----
-
-## 🎖️ CRÉDITOS
-
-**Creador y Propietario**: Juan Alberto López Vázquez
-
-**Herramientas Integradas**:
-- Kali Linux Tools
-- Metasploit Framework
-- Burp Suite Community
-- OWASP ZAP
-- Nmap
-- Wireshark
-
----
-
-## 🚀 ROADMAP
-
-- [ ] Integración con Shodan
-- [ ] Módulo de análisis forense
-- [ ] Reportes en PDF
-- [ ] Mobile app
-- [ ] Cloud deployment
-- [ ] Inteligencia artificial mejorada
-
----
-
-**Isabella v7.0** - *La plataforma profesional de pentesting*
+**Isabella v7.0 - Herramienta Profesional de Ciberseguridad**
 
 © 2024 Juan Alberto López Vázquez - Todos los derechos reservados
-
-⚠️ **USO RESPONSABLE** - Esta herramienta es solo para auditorías autorizadas
