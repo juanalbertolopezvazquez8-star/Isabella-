@@ -155,27 +155,27 @@ def make_shell_context():
 
 if __name__ == '__main__':
     print("""
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║                 🔥 ISABELLA v7.0 - INICIANDO 🔥                 ║
-║                                                                  ║
-║                © 2024 Juan Alberto López Vázquez                 ║
-║                                                                  ║
-║       Plataforma Profesional de Pentesting y Ciberseguridad      ║
-║                                                                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  📍 URL: http://localhost:5000                                  ║
-║  📊 Modo: {}                                           ║
-║  🔌 Puerto: 5000                                                 ║
-║  🗄️  BD: SQLite                                                  ║
-║                                                                  ║
-║  ⚠️  DISCLAIMER:                                                 ║
-║  • Solo usar en sistemas autorizados                            ║
-║  • Cumplir todas las leyes aplicables                           ║
-║  • Usuario responsable de cualquier daño                        ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║                 🔥 ISABELLA v7.0 - INICIANDO 🔥                ║
+║                                                                ║
+║                © 2024 Juan Alberto López Vázquez                ║
+║                                                                ║
+║       Plataforma Profesional de Pentesting y Ciberseguridad    ║
+║                                                                ║
+╠════════════════════════════════════════════════════════════════╣
+║                                                                ║
+║  📍 URL: http://localhost:5000                                ║
+║  📊 Modo: {}                                       ║
+║  🔌 Puerto: 5000                                               ║
+║  🗄️  BD: SQLite                                                ║
+║                                                                ║
+║  ⚠️  DISCLAIMER:                                               ║
+║  • Solo usar en sistemas autorizados                          ║
+║  • Cumplir todas las leyes aplicables                         ║
+║  • Usuario responsable de cualquier daño                      ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
     """.format(ENV.upper()))
     
     app.run(
