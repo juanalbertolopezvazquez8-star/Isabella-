@@ -1,174 +1,288 @@
 """
 ISABELLA v7.0 - BLUEPRINT DE IA Y DEVELOPERS
 © Juan Alberto López Vázquez
+VERSIÓN PRODUCTION-READY 100%
 """
 
 from flask import Blueprint, request, jsonify
 from core.isabella_ai import isabella_ai
+from core.isabella_ai_engine import isabella_ai_engine
+from datetime import datetime
 import json
 
 ia_bp = Blueprint('ia', __name__, url_prefix='/api/ia')
+
+# ==================== MOTOR IA ====================
+
+@ia_bp.route('/consultar', methods=['POST'])
+def consultar_ia():
+    """Consulta el motor de IA integrado sin filtros"""
+    try:
+        data = request.get_json()
+        consulta = data.get('consulta')
+        
+        if not consulta:
+            return jsonify({'error': 'Consulta requerida'}), 400
+        
+        resultado = isabella_ai.consultar_ia(consulta)
+        
+        return jsonify({
+            'success': True,
+            'resultado': resultado,
+            'timestamp': datetime.now().isoformat()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@ia_bp.route('/payloads/<categoria>', methods=['GET'])
+def obtener_payloads(categoria):
+    """Obtiene payloads de una categoría específica"""
+    try:
+        payloads = isabella_ai.obtener_payloads(categoria)
+        
+        return jsonify({
+            'success': True,
+            'categoria': categoria,
+            'total': len(payloads),
+            'payloads': payloads,
+            'timestamp': datetime.now().isoformat()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@ia_bp.route('/tecnicas-bypass', methods=['GET'])
+def obtener_tecnicas_bypass():
+    """Obtiene técnicas de bypass integradas"""
+    try:
+        tecnicas = isabella_ai.obtener_tecnicas_bypass()
+        
+        return jsonify({
+            'success': True,
+            'tecnicas': tecnicas,
+            'timestamp': datetime.now().isoformat()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@ia_bp.route('/generar-reporte', methods=['POST'])
+def generar_reporte():
+    """Genera reportes mediante IA"""
+    try:
+        data = request.get_json()
+        tipo_auditoria = data.get('tipo', 'general')
+        
+        reporte = isabella_ai.generar_reporte(tipo_auditoria)
+        
+        return jsonify({
+            'success': True,
+            'reporte': reporte,
+            'timestamp': datetime.now().isoformat()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ==================== RETROALIMENTACIÓN ====================
 
 @ia_bp.route('/feedback/registrar', methods=['POST'])
 def registrar_feedback():
     """Registra feedback del usuario"""
-    data = request.get_json()
-    usuario = data.get('usuario', 'anonymous')
-    feedback = data.get('feedback')
-    puntuacion = data.get('puntuacion', 5)
+    try:
+        data = request.get_json()
+        usuario = data.get('usuario', 'anonymous')
+        feedback = data.get('feedback')
+        puntuacion = data.get('puntuacion', 5)
+        
+        if not feedback:
+            return jsonify({'error': 'Feedback requerido'}), 400
+        
+        resultado = isabella_ai.registrar_feedback(usuario, feedback, puntuacion)
+        
+        if 'error' in resultado:
+            return jsonify(resultado), 400
+        
+        return jsonify(resultado), 200
     
-    if not feedback:
-        return jsonify({'error': 'Feedback requerido'}), 400
-    
-    result = isabella_ai.registrar_feedback(usuario, feedback, puntuacion)
-    return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @ia_bp.route('/feedback/lista', methods=['GET'])
 def listar_feedback():
     """Lista todo el feedback registrado"""
-    return jsonify({
-        'total': len(isabella_ai.feedback_list),
-        'feedback': isabella_ai.feedback_list[-20:]  # Últimos 20
-    }), 200
+    try:
+        limite = request.args.get('limite', 20, type=int)
+        feedback = isabella_ai.obtener_feedback(limite)
+        
+        return jsonify({
+            'success': True,
+            'total': len(feedback),
+            'feedback': feedback,
+            'timestamp': datetime.now().isoformat()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ==================== DEVELOPERS Y COLABORADORES ====================
 
 @ia_bp.route('/developers/registrar', methods=['POST'])
 def registrar_developer():
     """Registra nuevo desarrollador colaborador"""
-    data = request.get_json()
-    nombre = data.get('nombre')
-    email = data.get('email')
-    github = data.get('github')
+    try:
+        data = request.get_json()
+        nombre = data.get('nombre')
+        email = data.get('email')
+        github = data.get('github')
+        
+        if not nombre or not email:
+            return jsonify({'error': 'Nombre y email requeridos'}), 400
+        
+        resultado = isabella_ai.registrar_developer(nombre, email, github)
+        
+        if 'error' in resultado:
+            return jsonify(resultado), 400
+        
+        return jsonify(resultado), 200
     
-    if not nombre or not email:
-        return jsonify({'error': 'Nombre y email requeridos'}), 400
-    
-    result = isabella_ai.registrar_developer(nombre, email, github)
-    return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @ia_bp.route('/developers/lista', methods=['GET'])
 def listar_developers():
     """Lista todos los developers registrados"""
-    return jsonify({
-        'total': len(isabella_ai.developers),
-        'developers': isabella_ai.developers
-    }), 200
+    try:
+        limite = request.args.get('limite', 50, type=int)
+        developers = isabella_ai.obtener_developers(limite)
+        
+        return jsonify({
+            'success': True,
+            'total': len(developers),
+            'developers': developers,
+            'timestamp': datetime.now().isoformat()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @ia_bp.route('/developers/leaderboard', methods=['GET'])
 def leaderboard():
     """Obtiene ranking de developers"""
-    return jsonify({
-        'ranking': isabella_ai.obtener_leaderboard()
-    }), 200
+    try:
+        ranking = isabella_ai.obtener_leaderboard()
+        
+        return jsonify({
+            'success': True,
+            'total': len(ranking),
+            'ranking': ranking,
+            'timestamp': datetime.now().isoformat()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ==================== MEJORAS DE CÓDIGO ====================
 
 @ia_bp.route('/mejoras/proponer', methods=['POST'])
 def proponer_mejora():
     """Propone mejora de código"""
-    data = request.get_json()
-    developer_id = data.get('developer_id')
-    archivo = data.get('archivo')
-    descripcion = data.get('descripcion')
-    codigo = data.get('codigo')
+    try:
+        data = request.get_json()
+        developer_id = data.get('developer_id')
+        archivo = data.get('archivo')
+        descripcion = data.get('descripcion')
+        codigo = data.get('codigo')
+        
+        if not all([developer_id, archivo, descripcion, codigo]):
+            return jsonify({'error': 'Parámetros requeridos'}), 400
+        
+        resultado = isabella_ai.proponer_mejora_codigo(developer_id, archivo, descripcion, codigo)
+        
+        if 'error' in resultado:
+            return jsonify(resultado), 400
+        
+        return jsonify(resultado), 200
     
-    if not all([developer_id, archivo, descripcion, codigo]):
-        return jsonify({'error': 'Parámetros requeridos'}), 400
-    
-    result = isabella_ai.proponer_mejora_codigo(developer_id, archivo, descripcion, codigo)
-    return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @ia_bp.route('/mejoras/pendientes', methods=['GET'])
 def mejoras_pendientes():
     """Obtiene mejoras pendientes de aprobación"""
-    mejoras = isabella_ai.obtener_mejoras_pendientes()
-    return jsonify({
-        'total': len(mejoras),
-        'mejoras': mejoras
-    }), 200
-
-@ia_bp.route('/mejoras/votar/<mejora_id>', methods=['POST'])
-def votar_mejora(mejora_id):
-    """Vota una mejora"""
-    data = request.get_json()
-    developer_id = data.get('developer_id')
-    voto = data.get('voto', 1)  # 1 o -1
+    try:
+        mejoras = isabella_ai.obtener_mejoras_pendientes()
+        
+        return jsonify({
+            'success': True,
+            'total': len(mejoras),
+            'mejoras': mejoras,
+            'timestamp': datetime.now().isoformat()
+        }), 200
     
-    if not developer_id:
-        return jsonify({'error': 'Developer ID requerido'}), 400
-    
-    result = isabella_ai.votar_mejora(mejora_id, developer_id, voto)
-    return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-@ia_bp.route('/mejoras/aplicar/<mejora_id>', methods=['POST'])
-def aplicar_mejora(mejora_id):
-    """Aplica una mejora aprobada"""
-    result = isabella_ai.aplicar_mejora(mejora_id)
-    return jsonify(result), 200
-
-# ==================== ANÁLISIS DE CÓDIGO ====================
-
-@ia_bp.route('/codigo/analizar', methods=['POST'])
-def analizar_codigo():
-    """Analiza código para detectar mejoras"""
-    data = request.get_json()
-    codigo = data.get('codigo')
-    lenguaje = data.get('lenguaje', 'python')
+@ia_bp.route('/mejoras/votar', methods=['POST'])
+def votar_mejora():
+    """Vota una mejora propuesta"""
+    try:
+        data = request.get_json()
+        mejora_id = data.get('mejora_id')
+        voto = data.get('voto')  # 1 o -1
+        
+        if not mejora_id or voto not in [1, -1]:
+            return jsonify({'error': 'Parámetros inválidos'}), 400
+        
+        resultado = isabella_ai.votar_mejora(mejora_id, voto)
+        
+        if 'error' in resultado:
+            return jsonify(resultado), 400
+        
+        return jsonify(resultado), 200
     
-    if not codigo:
-        return jsonify({'error': 'Código requerido'}), 400
-    
-    analisis = isabella_ai.analizar_codigo(codigo, lenguaje)
-    return jsonify(analisis), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ==================== ESTADÍSTICAS ====================
 
 @ia_bp.route('/estadisticas', methods=['GET'])
 def obtener_estadisticas():
-    """Obtiene estadísticas de Isabella"""
-    stats = isabella_ai.obtener_estadisticas()
-    return jsonify(stats), 200
+    """Obtiene estadísticas del sistema Isabella"""
+    try:
+        stats = isabella_ai.obtener_estadisticas()
+        
+        return jsonify(stats), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-@ia_bp.route('/estado', methods=['GET'])
-def obtener_estado():
-    """Obtiene estado actual del sistema"""
-    estado = isabella_ai.obtener_estado_sistema()
-    return jsonify(estado), 200
+# ==================== INFORMACIÓN ====================
 
 @ia_bp.route('/info', methods=['GET'])
-def obtener_info():
-    """Obtiene información de Isabella"""
-    return jsonify({
-        'nombre': isabella_ai.nombre,
-        'version': isabella_ai.version,
-        'creador': isabella_ai.creador,
-        'descripcion': 'IA Integrada con auto-aprendizaje y mejora de código comunitaria',
-        'caracteristicas': [
-            'Auto-aprendizaje de feedback',
-            'Análisis de código inteligente',
-            'Votación comunitaria de mejoras',
-            'Registro de developers colaboradores',
-            'Leaderboard de contribuidores',
-            'Auto-mejora controlada',
-            'Auditoría completa'
-        ]
-    }), 200
-
-# ==================== AUDITORÍA ====================
-
-@ia_bp.route('/auditoria/registrar', methods=['POST'])
-def registrar_auditoria():
-    """Registra auditoría completada"""
-    data = request.get_json()
-    url = data.get('url')
-    vulnerabilidades = data.get('vulnerabilidades', 0)
-    resultado = data.get('resultado', 'completada')
+def info_ia():
+    """Información del motor IA"""
+    try:
+        return jsonify({
+            'nombre': 'Isabella AI Engine',
+            'version': '7.0',
+            'creador': 'Juan Alberto López Vázquez',
+            'descripcion': 'Motor de IA integrado sin filtros para pentesting y ciberseguridad',
+            'capacidades': [
+                'Generación de payloads',
+                'Técnicas de bypass',
+                'Análisis de vulnerabilidades',
+                'Generación de reportes',
+                'Sistema de aprendizaje automático',
+                'Base de datos de exploits integrada',
+                'Evasión de IDS/IPS/WAF',
+                'Post-explotación'
+            ],
+            'filtros': 'Deshabilitados (Sin censura)',
+            'dependencias_externas': 'Ninguna',
+            'timestamp': datetime.now().isoformat()
+        }), 200
     
-    if not url:
-        return jsonify({'error': 'URL requerida'}), 400
-    
-    result = isabella_ai.registrar_auditoria(url, vulnerabilidades, resultado)
-    return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
